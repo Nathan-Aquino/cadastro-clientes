@@ -110,7 +110,7 @@ public class Verificacao {
         }
     }
 
-    public static Boolean verificaCliente (Cliente cliente) {
+    public static Integer verificaCliente (Cliente cliente) {
         Boolean nome = verificaNome(cliente.getNome());
         Boolean sobrenome = verificaSobrenome(cliente.getSobrenome());
         Boolean idade = verificaIdade(cliente.getIdade());
@@ -119,29 +119,29 @@ public class Verificacao {
         Boolean telefone = verificaTelefone(cliente.getTelefone());
 
         if (!nome) {
-            return false;
+            return 1;
         }
 
         if (!sobrenome) {
-            return false;
+            return 2;
         }
 
         if (!idade) {
-            return false;
+            return 3;
         }
 
         if (!cpf) {
-            return false;
+            return 4;
         }
 
         if (!email) {
-            return false;
+            return 5;
         }
 
         if (!telefone) {
-            return false;
+            return 6;
         }
 
-        return true;
+        return 0;
     }
 }

@@ -16,7 +16,8 @@ public class ClienteDao implements IClienteDao{
 
     @Override
     public void salvar(Cliente cliente) {
-        if (Verificacao.verificaCliente(cliente)) {
+        Integer checagem = Verificacao.verificaCliente(cliente);
+        if (checagem.equals(0)) {
             clientes.put(cliente.getCpf(), cliente);
         } else {
             //TO-DO
