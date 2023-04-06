@@ -4,9 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FormularioComponente extends JComponent {
+
+    private GroupLayout gpLayout;
+    public JLabel[] labels;
+    public JTextField[] textFields;
+
     public  FormularioComponente () {
 
-        JLabel[] labels = {
+        this.labels = new JLabel[]{
                 new JLabel("Nome"),
                 new JLabel("Sobrenome"),
                 new JLabel("Idade"),
@@ -15,7 +20,7 @@ public class FormularioComponente extends JComponent {
                 new JLabel("Telefone")
         };
 
-        JTextField[] textFields = {
+        this.textFields = new JTextField[]{
                 new JTextField(),
                 new JTextField(),
                 new JTextField(),
@@ -24,13 +29,51 @@ public class FormularioComponente extends JComponent {
                 new JTextField()
         };
 
+        this.gpLayout = new GroupLayout(this);
+
+        setLayout(this.gpLayout);
+
+        this.gerarLayoutHorizontal();
+        this.gerarLayoutVertical();
+
+        setVisible(true);
+    }
+
+    private void gerarLayoutHorizontal () {
+        GroupLayout.SequentialGroup grupoHorizontal = this.gpLayout.createSequentialGroup();
+
+        GroupLayout.Group grupoParaleloLabel = this.gpLayout.createParallelGroup();
         for (int i = 0; i < 6; i++) {
-            add(labels[i]);
-            add(textFields[i]);
+            grupoParaleloLabel.addComponent(this.labels[i]);
+        }
+        grupoHorizontal.addGroup(grupoParaleloLabel);
+
+        grupoHorizontal.addGap(20);
+
+        GroupLayout.Group grupoParaleloFields = this.gpLayout.createParallelGroup();
+        for (int k = 0; k < 6; k++) {
+            grupoParaleloFields.addComponent(this.textFields[k], GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE);
+        }
+        grupoHorizontal.addGroup(grupoParaleloFields);
+
+        gpLayout.setHorizontalGroup(grupoHorizontal);
+    }
+
+    private void gerarLayoutVertical () {
+        GroupLayout.SequentialGroup grupoVertical = this.gpLayout.createSequentialGroup();
+
+        for (int z = 0; z < 6; z++) {
+            GroupLayout.Group grupoParalelo = this.gpLayout.createParallelGroup(GroupLayout.Alignment.BASELINE);
+            grupoParalelo.addComponent(this.labels[z]);
+            grupoParalelo.addComponent(this.textFields[z], GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE);
+
+            grupoVertical.addGroup(grupoParalelo);
+
+            if (z != 5) {
+               grupoVertical.addGap(20);
+            }
         }
 
-        setLayout(new GridLayout(6,2,0,40));
-        setSize(450, 350);
-        setVisible(true);
+        gpLayout.setVerticalGroup(grupoVertical);
     }
 }
