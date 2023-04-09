@@ -43,7 +43,7 @@ public class FormularioComponente extends JComponent {
         GroupLayout.SequentialGroup grupoHorizontal = this.gpLayout.createSequentialGroup();
 
         GroupLayout.Group grupoParaleloLabel = this.gpLayout.createParallelGroup();
-        for (int i = 0; this.labels.length < 6; i++) {
+        for (int i = 0; i < this.labels.length; i++) {
             grupoParaleloLabel.addComponent(this.labels[i]);
         }
         grupoHorizontal.addGroup(grupoParaleloLabel);

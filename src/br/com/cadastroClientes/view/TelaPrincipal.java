@@ -13,6 +13,7 @@ public class TelaPrincipal extends JFrame {
 
         FormularioComponente forms = new FormularioComponente();
         BotoesComponente menu = new BotoesComponente();
+        TabelaComponente tabela = new TabelaComponente();
 
         gpLayout.setAutoCreateGaps(true);
         gpLayout.setAutoCreateContainerGaps(true);
@@ -22,6 +23,7 @@ public class TelaPrincipal extends JFrame {
                         .addGap(1250)
                         .addComponent(forms, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(menu, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tabela, GroupLayout.PREFERRED_SIZE, 1200, GroupLayout.PREFERRED_SIZE)
         );
         gpLayout.setVerticalGroup(
                 gpLayout.createSequentialGroup()
@@ -29,6 +31,8 @@ public class TelaPrincipal extends JFrame {
                         .addComponent(forms, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(35)
                         .addComponent(menu, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                        .addGap(35)
+                        .addComponent(tabela)
         );
 
         setLocation(270,40);
