@@ -42,11 +42,11 @@ public class Verificacao {
     }
 
     public static Boolean verificaTelefone (String telefone) {
-        if (telefone.length() != 10) {
+        if (telefone.length() != 11) {
             return false;
         }
 
-        if (!telefone.matches("^[789]\\d{9}$")) {
+        if (!telefone.matches("^\\d{2}\\d{8,9}$")) {
             return false;
         }
 
@@ -92,16 +92,17 @@ public class Verificacao {
         }
 
         // Verifica os dígitos verificadores
-        int digito1 = calcularDigitoVerificador(cpf.substring(0, 9));
-        int digito2 = calcularDigitoVerificador(cpf.substring(0, 9) + digito1);
-        return cpf.equals(cpf.substring(0, 9) + digito1 + digito2);
+        int digito1 = calcularDigitoVerificador(cpf.substring(0, 9), 10);
+        int digito2 = calcularDigitoVerificador(cpf.substring(0, 9) + digito1, 11);
+        return (cpf.charAt(9) - '0' == digito1) && (cpf.charAt(10) - '0' == digito2);
     }
 
-    private static int calcularDigitoVerificador(String numeros) {
+    private static int calcularDigitoVerificador(String str, int peso) {
         int soma = 0;
-        for (int i = 0; i < numeros.length(); i++) {
-            soma += (numeros.charAt(i) - '0') * (10 - i);
+        for (int i = 0; i < str.length(); i++) {
+            soma += (str.charAt(i) - '0') * peso--;
         }
+
         int resto = soma % 11;
         if (resto < 2) {
             return 0;

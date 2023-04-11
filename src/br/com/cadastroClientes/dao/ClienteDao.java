@@ -3,9 +3,7 @@ import br.com.cadastroClientes.domain.Cliente;
 import br.com.cadastroClientes.exception.*;
 import br.com.cadastroClientes.util.Verificacao;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ClienteDao implements IClienteDao{
 
@@ -54,7 +52,11 @@ public class ClienteDao implements IClienteDao{
     }
 
     @Override
-    public Collection<Cliente> consultarClientes() {
-        return this.clientes.values();
+    public List<Cliente> consultarClientes() {
+        List<Cliente> clientes = new ArrayList<Cliente>();
+        for (Map.Entry<String, Cliente> cliente : this.clientes.entrySet()) {
+            clientes.add(cliente.getValue());
+        }
+        return clientes;
     }
 }

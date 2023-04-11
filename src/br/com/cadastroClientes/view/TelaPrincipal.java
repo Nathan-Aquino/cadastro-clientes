@@ -1,7 +1,6 @@
 package br.com.cadastroClientes.view;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class TelaPrincipal extends JFrame {
     public TelaPrincipal () {
@@ -11,9 +10,9 @@ public class TelaPrincipal extends JFrame {
         GroupLayout gpLayout = new GroupLayout(this.getContentPane());
         setLayout(gpLayout);
 
-        FormularioComponente forms = new FormularioComponente();
-        BotoesComponente menu = new BotoesComponente();
         TabelaComponente tabela = new TabelaComponente();
+        FormularioComponente forms = new FormularioComponente(tabela);
+        BotoesComponente menu = new BotoesComponente(forms);
 
         gpLayout.setAutoCreateGaps(true);
         gpLayout.setAutoCreateContainerGaps(true);
