@@ -13,18 +13,21 @@ public class BotoesComponente extends JComponent implements ActionListener {
         JButton consultar = new JButton("Consultar");
         JButton excluir = new JButton("Excluir");
         JButton salvar = new JButton("Salvar");
+        JButton limpar = new JButton("Limpar");
 
         this.forms = forms;
 
         salvar.addActionListener(this);
         excluir.addActionListener(this);
         consultar.addActionListener(this);
+        limpar.addActionListener(this);
 
         add(salvar);
         add(excluir);
         add(consultar);
+        add(limpar);
 
-        setLayout(new GridLayout(1,3,10,20));
+        setLayout(new GridLayout(1,4,10,20));
         setVisible(true);
     }
 
@@ -35,8 +38,13 @@ public class BotoesComponente extends JComponent implements ActionListener {
                 forms.salvarCliente();
                 break;
             case "Excluir":
+                forms.excluirCliente();
                 break;
             case "Consultar":
+                forms.consultarCliente();
+                break;
+            case "Limpar":
+                forms.limpaCampos();
                 break;
         }
     }

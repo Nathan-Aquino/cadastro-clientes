@@ -88,7 +88,7 @@ public class FormularioComponente extends JComponent {
         Cliente cliente = new Cliente(
                 this.textFields[0].getText(),
                 this.textFields[1].getText(),
-                Integer.valueOf(this.textFields[2].getText()),
+                this.textFields[2].getText(),
                 this.textFields[3].getText(),
                 this.textFields[4].getText(),
                 this.textFields[5].getText()
@@ -105,9 +105,69 @@ public class FormularioComponente extends JComponent {
         }
     }
 
+    public void consultarCliente () {
+        String cpf = JOptionPane.showInputDialog(this, "Digite o CPF","Consultar Cliente", JOptionPane.QUESTION_MESSAGE);
+        if (cpf != null){
+            try{
+                ClienteDao dao = InicializacaoDao.clienteDao();
+                Cliente cliente = dao.consultar(cpf);
+
+                this.textFields[0].setText(cliente.getNome());
+                this.textFields[1].setText(cliente.getSobrenome());
+                this.textFields[2].setText(cliente.getIdade());
+                this.textFields[3].setText(cliente.getCpf());
+                this.textFields[4].setText(cliente.getEmail());
+                this.textFields[5].setText(cliente.getTelefone());
+
+            } catch (ClienteNaoEncontradoException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Alerta", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
+    public void consultarCliente (String cpf) {
+        try{
+            ClienteDao dao = InicializacaoDao.clienteDao();
+            Cliente cliente = dao.consultar(cpf);
+
+            this.textFields[0].setText(cliente.getNome());
+            this.textFields[1].setText(cliente.getSobrenome());
+            this.textFields[2].setText(cliente.getIdade());
+            this.textFields[3].setText(cliente.getCpf());
+            this.textFields[4].setText(cliente.getEmail());
+            this.textFields[5].setText(cliente.getTelefone());
+
+        } catch (ClienteNaoEncontradoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    public void excluirCliente () {
+        String cpf = JOptionPane.showInputDialog(this, "Digite o CPF","Excluir Cliente", JOptionPane.QUESTION_MESSAGE);
+        if (cpf != null){
+            try{
+                ClienteDao dao = InicializacaoDao.clienteDao();
+                Cliente cliente = dao.consultar(cpf);
+
+                String msg = cliente.getNome() + " " + cliente.getSobrenome() + " será excluido do sistema. tem certeza dessa operação?";
+                int escolha = JOptionPane.showConfirmDialog(this, msg, "Excluir Cliente", JOptionPane.WARNING_MESSAGE);
+
+                if (escolha == JOptionPane.YES_OPTION) {
+                    dao.excluir(cpf);
+                    this.limpaCampos();
+                    this.tabela.recebeClientes();
+                }
+
+            } catch (ClienteNaoEncontradoException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Alerta", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
     public void limpaCampos () {
         for (int x = 0; x < this.textFields.length; x++) {
             this.textFields[x].setText("");
         }
+        this.tabela.resetaTabela();
     }
 }

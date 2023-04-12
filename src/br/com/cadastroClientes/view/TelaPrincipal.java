@@ -13,6 +13,7 @@ public class TelaPrincipal extends JFrame {
         TabelaComponente tabela = new TabelaComponente();
         FormularioComponente forms = new FormularioComponente(tabela);
         BotoesComponente menu = new BotoesComponente(forms);
+        tabela.recebeForms(forms);
 
         gpLayout.setAutoCreateGaps(true);
         gpLayout.setAutoCreateContainerGaps(true);

@@ -4,19 +4,23 @@ import br.com.cadastroClientes.dao.ClienteDao;
 import br.com.cadastroClientes.dao.InicializacaoDao;
 import br.com.cadastroClientes.domain.Cliente;
 import br.com.cadastroClientes.util.Transformacao;
+import br.com.cadastroClientes.util.modeloTabelaCustomizado;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class TabelaComponente extends JComponent {
     private String[][] dados = new String[0][0];
     private String[] colunas;
     private JTable tabela;
+    private FormularioComponente forms;
 
     public TabelaComponente () {
-        this.recebeClientes();
         this.colunas = new String[] {"CPF","Nome","E-mail","Telefone"};
 
         this.tabela = new JTable(this.dados, colunas);
@@ -33,6 +37,23 @@ public class TabelaComponente extends JComponent {
         }
         this.tabela.setRowHeight(alturaLinha);
 
+        this.tabela.setRowSelectionAllowed(true);
+
+        ListSelectionModel select = this.tabela.getSelectionModel();
+        select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        select.addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        Integer linha = tabela.getSelectedRow();
+                        if (linha != -1){
+                            String cpf = (String) tabela.getValueAt(linha,0);
+                            forms.consultarCliente(cpf);
+                        }
+                    }
+                }
+        );
+
         JScrollPane scroll = new JScrollPane(this.tabela);
 
         setLayout(new BorderLayout());
@@ -48,7 +69,18 @@ public class TabelaComponente extends JComponent {
 
         if (clientes.size() != 0) {
             this.dados = Transformacao.listaParaMatriz(clientes);
-            this.tabela.setModel(new DefaultTableModel(this.dados, this.colunas));
+            this.resetaTabela();
+        } else {
+            this.dados = new String[0][0];
+            this.resetaTabela();
         }
+    }
+
+    public void recebeForms (FormularioComponente forms) {
+        this.forms = forms;
+    }
+
+    public void resetaTabela () {
+        this.tabela.setModel(new modeloTabelaCustomizado(this.dados, this.colunas));
     }
 }

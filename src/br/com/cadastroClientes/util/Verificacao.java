@@ -1,5 +1,7 @@
 package br.com.cadastroClientes.util;
 import br.com.cadastroClientes.domain.Cliente;
+
+import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,10 +35,15 @@ public class Verificacao {
         return true;
     }
 
-    public static Boolean verificaIdade (Integer idade) {
-        if (idade >= 16) {
-            return true;
-        } else {
+    public static Boolean verificaIdade (String idade) {
+        try {
+            Integer idadeI = Integer.valueOf(idade);
+            if (idadeI >= 16) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (InputMismatchException | NumberFormatException ex) {
             return false;
         }
     }

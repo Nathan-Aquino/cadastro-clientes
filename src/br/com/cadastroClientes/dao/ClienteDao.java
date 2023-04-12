@@ -16,8 +16,10 @@ public class ClienteDao implements IClienteDao{
     @Override
     public void salvar(Cliente cliente) throws SobrenomeException, TelefoneException, IdadeException, CpfException, NomeException, EmailException {
         Integer checagem = Verificacao.verificaCliente(cliente);
-        if (checagem.equals(0)) {
+        if (checagem.equals(0) && !this.clientes.containsKey(cliente.getCpf())) {
             clientes.put(cliente.getCpf(), cliente);
+        } else if (this.clientes.containsKey(cliente.getCpf())) {
+            this.atualizar(cliente);
         } else {
             ManipuladorDeExcecao.lancamentoDeExcecao(checagem);
         }
