@@ -3,11 +3,15 @@ package br.com.cadastroClientes.dao;
 public class InicializacaoDao {
     private static ClienteDao dao;
 
-    public InicializacaoDao () {
-        this.dao = new ClienteDao();
+    private InicializacaoDao () {
     }
 
     public static ClienteDao clienteDao () {
-        return dao;
+        if (dao != null) {
+            return dao;
+        } else {
+            dao = new ClienteDao();
+            return dao;
+        }
     }
 }

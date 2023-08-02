@@ -3,6 +3,7 @@ package br.com.cadastroClientes.view;
 import br.com.cadastroClientes.dao.ClienteDao;
 import br.com.cadastroClientes.dao.InicializacaoDao;
 import br.com.cadastroClientes.domain.Cliente;
+import br.com.cadastroClientes.services.ClienteService;
 import br.com.cadastroClientes.util.Transformacao;
 import br.com.cadastroClientes.util.modeloTabelaCustomizado;
 
@@ -65,7 +66,9 @@ public class TabelaComponente extends JComponent {
 
     public void recebeClientes () {
         ClienteDao dao = InicializacaoDao.clienteDao();
-        List<Cliente> clientes = dao.consultarClientes();
+        ClienteService service = ClienteService.service(dao);
+
+        List<Cliente> clientes = service.consultarObjetos();
 
         if (clientes.size() != 0) {
             this.dados = Transformacao.listaParaMatriz(clientes);

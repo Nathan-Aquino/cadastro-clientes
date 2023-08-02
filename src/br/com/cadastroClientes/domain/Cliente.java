@@ -1,6 +1,9 @@
 package br.com.cadastroClientes.domain;
 
-public class Cliente {
+import br.com.cadastroClientes.util.GeradorDeId;
+
+public class Cliente implements Modelo{
+    private Integer id;
     private String nome;
     private String sobrenome;
     private String idade;
@@ -9,12 +12,17 @@ public class Cliente {
     private String telefone;
 
     public Cliente (String nome, String sobrenome, String idade, String cpf, String email, String telefone) {
+        this.id = GeradorDeId.gerar(nome,sobrenome);
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idade = idade;
         this.cpf = cpf;
         this.email = email;
         this.telefone = telefone;
+    }
+
+    public String getId() {
+        return this.id.toString();
     }
 
     public String getNome() {
