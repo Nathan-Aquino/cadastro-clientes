@@ -4,6 +4,7 @@ import br.com.cadastroClientes.dao.ClienteDao;
 import br.com.cadastroClientes.dao.InicializacaoDao;
 import br.com.cadastroClientes.domain.Cliente;
 import br.com.cadastroClientes.exception.*;
+import br.com.cadastroClientes.services.ClienteService;
 
 import javax.swing.*;
 
@@ -95,9 +96,10 @@ public class FormularioComponente extends JComponent {
         );
 
         ClienteDao dao = InicializacaoDao.clienteDao();
+        ClienteService service = ClienteService.service(dao);
 
         try {
-            dao.salvar(cliente);
+            service.salvar(cliente);
             this.limpaCampos();
             this.tabela.recebeClientes();
         } catch (SobrenomeException | TelefoneException | IdadeException | CpfException | NomeException | EmailException  ex) {
@@ -110,7 +112,8 @@ public class FormularioComponente extends JComponent {
         if (cpf != null){
             try{
                 ClienteDao dao = InicializacaoDao.clienteDao();
-                Cliente cliente = dao.consultar(cpf);
+                ClienteService service = ClienteService.service(dao);
+                Cliente cliente = service.consultar(cpf);
 
                 this.textFields[0].setText(cliente.getNome());
                 this.textFields[1].setText(cliente.getSobrenome());
@@ -128,7 +131,8 @@ public class FormularioComponente extends JComponent {
     public void consultarCliente (String cpf) {
         try{
             ClienteDao dao = InicializacaoDao.clienteDao();
-            Cliente cliente = dao.consultar(cpf);
+            ClienteService service = ClienteService.service(dao);
+            Cliente cliente = service.consultar(cpf);
 
             this.textFields[0].setText(cliente.getNome());
             this.textFields[1].setText(cliente.getSobrenome());
@@ -147,13 +151,14 @@ public class FormularioComponente extends JComponent {
         if (cpf != null){
             try{
                 ClienteDao dao = InicializacaoDao.clienteDao();
-                Cliente cliente = dao.consultar(cpf);
+                ClienteService service = ClienteService.service(dao);
+                Cliente cliente = service.consultar(cpf);
 
                 String msg = cliente.getNome() + " " + cliente.getSobrenome() + " será excluido do sistema. tem certeza dessa operação?";
                 int escolha = JOptionPane.showConfirmDialog(this, msg, "Excluir Cliente", JOptionPane.WARNING_MESSAGE);
 
                 if (escolha == JOptionPane.YES_OPTION) {
-                    dao.excluir(cpf);
+                    service.excluir(cpf);
                     this.limpaCampos();
                     this.tabela.recebeClientes();
                 }
