@@ -5,4 +5,5 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({TestClienteDao.class, TestClienteService.class})
 public class TodosOsTestes {
+
 }
