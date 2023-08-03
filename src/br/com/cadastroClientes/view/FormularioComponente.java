@@ -99,7 +99,7 @@ public class FormularioComponente extends JComponent {
         ClienteService service = ClienteService.service(dao);
 
         try {
-            service.salvar(cliente);
+            service.atualizar(cliente);
             this.limpaCampos();
             this.tabela.recebeClientes();
         } catch (SobrenomeException | TelefoneException | IdadeException | CpfException | NomeException | EmailException  ex) {

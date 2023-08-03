@@ -45,4 +45,24 @@ public class ClienteService extends GenericServices<Cliente> implements ICliente
             }
         }
     }
+
+    @Override
+    public void atualizar (Cliente cliente) {
+        List<Cliente> clientes = super.consultarObjetos();
+
+        boolean flag = false;
+
+        for (Cliente clienteSalvo : clientes) {
+            if (clienteSalvo.getCpf().equals(cliente.getCpf())) {
+                cliente.setId(Integer.parseInt(clienteSalvo.getId()));
+                flag = true;
+            }
+        }
+
+        if (flag) {
+            super.atualizar(cliente);
+        } else {
+            super.salvar(cliente);
+        }
+    }
 }
