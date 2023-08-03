@@ -49,4 +49,8 @@ public class Cliente implements Modelo{
     public String getTelefone() {
         return telefone;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
